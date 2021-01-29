@@ -15,7 +15,7 @@ public protocol ApolloClientProtocol: class {
   /// - Parameters:
   ///   - callbackQueue: The queue to fall back on. Should default to the main queue.
   ///   - completion: [optional] A completion closure to execute when clearing has completed. Should default to nil.
-  func clearCache(callbackQueue: DispatchQueue, completion: ((Result<Void, Error>) -> Void)?)
+    func clearCache(callbackQueue: DispatchQueue, completion: ((Swift.Result<Void, Error>) -> Void)?)
 
   /// Fetches a query from the server or from the local cache, depending on the current contents of the cache and the specified cache policy.
   ///
@@ -30,7 +30,7 @@ public protocol ApolloClientProtocol: class {
                                   cachePolicy: CachePolicy,
                                   contextIdentifier: UUID?,
                                   queue: DispatchQueue,
-                                  resultHandler: GraphQLResultHandler<Query.Data>?) -> Cancellable
+                                  resultHandler: GraphQLResultHandler<Query.Data>?) -> Apollo.Cancellable
 
   /// Watches a query by first fetching an initial result from the server or from the local cache, depending on the current contents of the cache and the specified cache policy. After the initial fetch, the returned query watcher object will get notified whenever any of the data the query result depends on changes in the local cache, and calls the result handler again with the new result.
   ///
@@ -54,7 +54,7 @@ public protocol ApolloClientProtocol: class {
   func perform<Mutation: GraphQLMutation>(mutation: Mutation,
                                           publishResultToStore: Bool,
                                           queue: DispatchQueue,
-                                          resultHandler: GraphQLResultHandler<Mutation.Data>?) -> Cancellable
+                                          resultHandler: GraphQLResultHandler<Mutation.Data>?) -> Apollo.Cancellable
 
   /// Uploads the given files with the given operation.
   ///
@@ -67,7 +67,7 @@ public protocol ApolloClientProtocol: class {
   func upload<Operation: GraphQLOperation>(operation: Operation,
                                            files: [GraphQLFile],
                                            queue: DispatchQueue,
-                                           resultHandler: GraphQLResultHandler<Operation.Data>?) -> Cancellable
+                                           resultHandler: GraphQLResultHandler<Operation.Data>?) -> Apollo.Cancellable
 
   /// Subscribe to a subscription
   ///
@@ -79,5 +79,5 @@ public protocol ApolloClientProtocol: class {
   /// - Returns: An object that can be used to cancel an in progress subscription.
   func subscribe<Subscription: GraphQLSubscription>(subscription: Subscription,
                                                     queue: DispatchQueue,
-                                                    resultHandler: @escaping GraphQLResultHandler<Subscription.Data>) -> Cancellable
+                                                    resultHandler: @escaping GraphQLResultHandler<Subscription.Data>) -> Apollo.Cancellable
 }
